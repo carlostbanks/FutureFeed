@@ -18,9 +18,11 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleSelectPlan = (planName: PlanType) => {
-    setSelectedPlan(planName);
-    setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 3000);
+    if (selectedPlan !== planName) {
+      setSelectedPlan(planName);
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
+    }
   };
 
   const billingPlans: BillingCardProps[] = [
@@ -49,11 +51,11 @@ function App() {
         period: BillingPeriod.MONTHLY
       },
       features: [
+        'Everything in Basic, plus:',
         'Up to 25 team members',
         '100GB storage',
         'Priority support',
         'Advanced integrations',
-        'Mobile app access',
         'Advanced analytics',
         'Custom branding'
       ],
@@ -69,13 +71,13 @@ function App() {
         period: BillingPeriod.MONTHLY
       },
       features: [
+        'Everything in Pro, plus:',
         'Unlimited team members',
         '1TB storage',
         '24/7 dedicated support',
         'Custom integrations',
-        'Mobile app access',
-        'Advanced analytics',
-        'Custom branding',
+        'SSO & advanced security',
+        'API access'
       ],
       onSelectPlan: handleSelectPlan,
       selected: selectedPlan === PlanType.ENTERPRISE
@@ -90,10 +92,10 @@ function App() {
           minHeight: '100vh',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           width: '100%',
-          pt: { xs: 4, md: 8 },
-          pb: { xs: 4, md: 8 }
+          pt: { xs: 4, md: 12 },
+          pb: { xs: 4, md: 12 }
         }}
       >
         <Container 
@@ -145,7 +147,7 @@ function App() {
                   zIndex: 1000
                 }}
               >
-                Successfully selected the {selectedPlan} plan!
+                Successfully selected the {selectedPlan ? selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1) : ''} plan!
               </Alert>
             )}
 
@@ -170,7 +172,7 @@ function App() {
             </Box>
 
             {/* Footer Info */}
-            <Box sx={{ mt: 6, textAlign: 'center' }}>
+            <Box sx={{ mt: 14, textAlign: 'center' }}>
               <Typography variant="body1" color="text.secondary">
                 All plans include a 14-day free trial. No credit card required.
               </Typography>

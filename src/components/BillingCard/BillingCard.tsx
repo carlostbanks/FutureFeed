@@ -126,25 +126,30 @@ export const BillingCard: React.FC<BillingCardProps> = ({
             aria-label={`${formatPlanName()} plan features`}
             sx={{ py: 0 }}
           >
-            {features.map((feature, index) => (
-              <ListItem key={index} sx={{ px: 0, py: 0.5 }}>
-                <ListItemIcon sx={{ minWidth: 32 }}>
-                  <CheckIcon
-                    sx={{
-                      color: 'success.main',
-                      fontSize: '1.25rem'
+            {features.map((feature, index) => {
+              const isEverythingInFeature = feature.startsWith('Everything in');
+              
+              return (
+                <ListItem key={index} sx={{ px: 0, py: 0.5 }}>
+                  <ListItemIcon sx={{ minWidth: 32 }}>
+                    <CheckIcon
+                      sx={{
+                        color: 'success.main',
+                        fontSize: '1.25rem'
+                      }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={feature}
+                    primaryTypographyProps={{
+                      variant: 'body1',
+                      color: 'text.primary',
+                      fontWeight: isEverythingInFeature ? 600 : 400
                     }}
                   />
-                </ListItemIcon>
-                <ListItemText
-                  primary={feature}
-                  primaryTypographyProps={{
-                    variant: 'body1',
-                    color: 'text.primary'
-                  }}
-                />
-              </ListItem>
-            ))}
+                </ListItem>
+              );
+            })}
           </List>
         </Box>
 
