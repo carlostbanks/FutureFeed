@@ -14,7 +14,7 @@ import { PlanType, BillingPeriod } from './types';
 import type { BillingCardProps } from './types';
 
 function App() {
-  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(PlanType.BASIC);
+  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
   const [showAlert, setShowAlert] = useState(false);
 
   const handleSelectPlan = (planName: PlanType) => {
@@ -76,8 +76,6 @@ function App() {
         'Mobile app access',
         'Advanced analytics',
         'Custom branding',
-        'SSO & advanced security',
-        'API access'
       ],
       onSelectPlan: handleSelectPlan,
       selected: selectedPlan === PlanType.ENTERPRISE
@@ -94,7 +92,8 @@ function App() {
           justifyContent: 'center',
           alignItems: 'center',
           width: '100%',
-          pt: { xs: 4, md: 8 }
+          pt: { xs: 4, md: 8 },
+          pb: { xs: 4, md: 8 }
         }}
       >
         <Container 
@@ -130,25 +129,25 @@ function App() {
                 Select the perfect plan for your team. Upgrade or downgrade at any time.
               </Typography>
             </Stack>
-
-            {/* Alert for plan selection - Fixed position */}
-            <Box
-              sx={{
-                position: 'fixed',
-                top: 20,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 1000,
-                width: { xs: '90%', sm: 'auto' },
-                maxWidth: 500
-              }}
-            >
-              {showAlert && (
-                <Alert severity="success" onClose={() => setShowAlert(false)}>
-                  Successfully selected the {selectedPlan} plan!
-                </Alert>
-              )}
-            </Box>
+            
+            {showAlert && (
+              <Alert
+                severity="success"
+                onClose={() => setShowAlert(false)}
+                sx={{
+                  position: 'fixed',
+                  top: 20,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: { xs: '90%', sm: 'auto' },
+                  minWidth: '290px',
+                  maxWidth: 500,
+                  zIndex: 1000
+                }}
+              >
+                Successfully selected the {selectedPlan} plan!
+              </Alert>
+            )}
 
             {/* Billing Cards Grid */}
             <Box

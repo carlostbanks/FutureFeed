@@ -45,9 +45,8 @@ export const BillingCard: React.FC<BillingCardProps> = ({
         display: 'flex',
         flexDirection: 'column',
         border: selected ? '2px solid' : (isPopular ? '2px solid' : '1px solid'),
-        borderColor: selected ? 'success.main' : (isPopular ? 'primary.main' : 'grey.200'),
+        borderColor: selected ? 'success.main' : (isPopular ? 'primary.main' : 'grey.300'),
         boxShadow: selected ? '0 4px 12px rgba(0, 0, 0, 0.15)' : 'none',
-        transform: isPopular ? 'scale(1.05)' : 'scale(1)',
         opacity: disabled ? 0.6 : 1,
         transition: 'all 0.2s ease-in-out',
         '&:hover': {
