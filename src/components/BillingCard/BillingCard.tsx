@@ -152,9 +152,7 @@ export const BillingCard: React.FC<BillingCardProps> = ({
         {/* Select Button */}
         <Button
           variant="contained"
-          // This is the key fix: use the `success` color from the palette when selected
           color={selected ? 'success' : 'primary'}
-          // FIX: The button is only disabled if the plan is unavailable, not if it's selected
           disabled={disabled}
           onClick={() => onSelectPlan(planName)}
           aria-describedby={`${planName}-features`}
@@ -173,7 +171,6 @@ export const BillingCard: React.FC<BillingCardProps> = ({
                 backgroundColor: 'success.dark',
                 boxShadow: 'none',
               },
-               // FIX: Use `success.dark` for the selected button background for better contrast
               backgroundColor: 'success.dark'
             })
           }}

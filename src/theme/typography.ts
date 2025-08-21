@@ -31,12 +31,12 @@ export const typography: ThemeOptions['typography'] = {
     lineHeight: 1.5
   },
   h6: {
-    fontSize: '1.125rem', // Now 18px
+    fontSize: '1.125rem', // 18px
     fontWeight: 600,
     lineHeight: 1.5
   },
   body1: {
-    fontSize: '1rem', // Now 16px
+    fontSize: '1rem', // 16px
     fontWeight: 400,
     lineHeight: 1.6
   },
