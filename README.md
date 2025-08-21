@@ -1,6 +1,8 @@
 # BillingCard Component - Carlos Banks
 
 Goal: Build a reusable React component for pricing plans with Material-UI and accessibility support.
+![Desktop view of billing cards](https://github.com/user-attachments/assets/0f3f85df-b7f1-4497-b1f1-aae27c01b4d4)
+
 
 ## Approach
 
