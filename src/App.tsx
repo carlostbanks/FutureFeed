@@ -20,7 +20,6 @@ function App() {
   const handleSelectPlan = (planName: PlanType) => {
     setSelectedPlan(planName);
     setShowAlert(true);
-    // Hide alert after 3 seconds
     setTimeout(() => setShowAlert(false), 3000);
   };
 
@@ -123,6 +122,7 @@ function App() {
               </Typography>
               <Typography
                 variant="h6"
+                component="h2"
                 textAlign="center"
                 color="text.secondary"
                 sx={{ maxWidth: 600 }}
@@ -172,7 +172,7 @@ function App() {
 
             {/* Footer Info */}
             <Box sx={{ mt: 6, textAlign: 'center' }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body1" color="text.secondary">
                 All plans include a 14-day free trial. No credit card required.
               </Typography>
             </Box>

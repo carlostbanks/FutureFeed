@@ -10,11 +10,9 @@ import {
   ListItemText,
   Chip,
   Box,
-  Stack
 } from '@mui/material';
 import { Check as CheckIcon } from '@mui/icons-material';
 import type { BillingCardProps } from './BillingCard.types';
-import { PlanType } from '../../types';
 
 export const BillingCard: React.FC<BillingCardProps> = ({
   planName,
@@ -25,19 +23,6 @@ export const BillingCard: React.FC<BillingCardProps> = ({
   disabled = false,
   selected = false
 }) => {
-  const handleCardClick = () => {
-    if (!disabled && !selected) {
-      onSelectPlan(planName);
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if ((event.key === 'Enter' || event.key === ' ') && !disabled && !selected) {
-      event.preventDefault();
-      onSelectPlan(planName);
-    }
-  };
-
   const formatPrice = () => {
     return `${price.currency}${price.amount}`;
   };
@@ -59,26 +44,19 @@ export const BillingCard: React.FC<BillingCardProps> = ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        cursor: disabled || selected ? 'default' : 'pointer',
-        transform: isPopular ? 'scale(1.05)' : 'scale(1)',
         border: selected ? '2px solid' : (isPopular ? '2px solid' : '1px solid'),
         borderColor: selected ? 'success.main' : (isPopular ? 'primary.main' : 'grey.200'),
+        boxShadow: selected ? '0 4px 12px rgba(0, 0, 0, 0.15)' : 'none',
+        transform: isPopular ? 'scale(1.05)' : 'scale(1)',
         opacity: disabled ? 0.6 : 1,
+        transition: 'all 0.2s ease-in-out',
         '&:hover': {
-          transform: disabled || selected ? (isPopular ? 'scale(1.05)' : 'scale(1)') : 'scale(1.02)',
-          borderColor: disabled || selected 
-            ? (selected ? 'success.main' : (isPopular ? 'primary.main' : 'grey.200'))
-            : 'primary.light'
+          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)',
+          transform: 'translateY(-2px)'
         }
       }}
-      tabIndex={disabled ? -1 : 0}
-      onClick={handleCardClick}
-      onKeyDown={handleKeyDown}
-      role="button"
-      aria-label={`${formatPlanName()} plan, ${formatPrice()} per ${price.period}${selected ? ' - currently selected' : ''}${disabled ? ' - unavailable' : ''}`}
-      aria-disabled={disabled}
     >
-      {/* Popular Badge - Fixed positioning */}
+      {/* Popular Badge */}
       {isPopular && (
         <Box
           sx={{
@@ -133,7 +111,7 @@ export const BillingCard: React.FC<BillingCardProps> = ({
             {formatPrice()}
           </Typography>
           <Typography
-            variant="body2"
+            variant="body1"
             color="text.secondary"
             sx={{ mt: 0.5 }}
           >
@@ -162,7 +140,7 @@ export const BillingCard: React.FC<BillingCardProps> = ({
                 <ListItemText
                   primary={feature}
                   primaryTypographyProps={{
-                    variant: 'body2',
+                    variant: 'body1',
                     color: 'text.primary'
                   }}
                 />
@@ -173,44 +151,30 @@ export const BillingCard: React.FC<BillingCardProps> = ({
 
         {/* Select Button */}
         <Button
-          variant={selected ? 'outlined' : 'contained'}
-          color="primary"
-          fullWidth
+          variant="contained"
+          // This is the key fix: use the `success` color from the palette when selected
+          color={selected ? 'success' : 'primary'}
+          // FIX: The button is only disabled if the plan is unavailable, not if it's selected
           disabled={disabled}
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent card click when button is clicked
-            if (!disabled && !selected) {
-              onSelectPlan(planName);
-            }
-          }}
-          onFocus={(e) => {
-            // Remove focus outline after click
-            if (e.target instanceof HTMLElement) {
-              setTimeout(() => {
-                e.target.blur();
-              }, 100);
-            }
-          }}
+          onClick={() => onSelectPlan(planName)}
           aria-describedby={`${planName}-features`}
           sx={{
             py: 1.5,
             fontWeight: 600,
-            '&:focus': {
-              outline: 'none',
-              boxShadow: 'none'
-            },
+            cursor: (selected || disabled) ? 'default' : 'pointer',
+            boxShadow: 'none',
             '&:focus-visible': {
               outline: '2px solid',
               outlineColor: 'primary.main',
               outlineOffset: '2px'
             },
             ...(selected && {
-              borderColor: 'success.main',
-              color: 'success.main',
               '&:hover': {
-                borderColor: 'success.dark',
-                backgroundColor: 'success.50'
-              }
+                backgroundColor: 'success.dark',
+                boxShadow: 'none',
+              },
+               // FIX: Use `success.dark` for the selected button background for better contrast
+              backgroundColor: 'success.dark'
             })
           }}
         >
