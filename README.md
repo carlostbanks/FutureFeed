@@ -1,69 +1,32 @@
-# React + TypeScript + Vite
+# BillingCard Component - Carlos Banks
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Goal: Build a reusable React component for pricing plans with Material-UI and accessibility support.
 
-Currently, two official plugins are available:
+## Approach
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built a responsive billing card component using React + Vite + TypeScript and Material-UI. Used CSS Grid for layout (mobile → tablet → desktop), custom Material-UI theme with typography and color palette, and proper accessibility with ARIA labels and keyboard navigation.
 
-## Expanding the ESLint configuration
+Key decisions:
+- TypeScript const objects instead of enums (had project config issue)
+- `sx` prop styling over external CSS
+- Fixed-position notifications to prevent layout shifts
+- Progressive feature lists ("Everything in Basic, plus:")
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Trade-offs
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**MUI Grid component**: Had TypeScript interface conflicts with props, so used native CSS Grid instead - simpler and more direct control.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+**Notification UX**: Fixed positioning eliminates content jumping but needs z-index management.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**TypeScript enums**: Project config rejected standard enum syntax (`erasableSyntaxOnly` error), so used const objects with type assertions for type safety.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## AI Assistance
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Anthropic Claude Sonnet 4.0**: Component structure, debugging TypeScript errors, and layout issues.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Google Gemini 2.5 Flash**: General development help and problem-solving.
+
+**Example prompt**: "The Enterprise card causes content to shift up and down when clicked - how do I fix this?"
+**Solution**: Added `alignItems: 'start'` to prevent grid realignment.
+
+AI was most helpful for accessibility implementation and fixing layout issues during development.
